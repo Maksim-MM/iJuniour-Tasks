@@ -1,5 +1,7 @@
 using UnityEngine;
 
+[RequireComponent ( typeof ( Mover ) )]
+[RequireComponent ( typeof ( View ) )]
 public class Player : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
