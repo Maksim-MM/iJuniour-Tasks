@@ -1,69 +1,58 @@
 using UnityEngine;
 
-[RequireComponent ( typeof ( Rigidbody2D ) )]
-[RequireComponent ( typeof ( SpriteRenderer ) )]
-[RequireComponent ( typeof ( Animator ) )]
 public class Player : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
     private const string Jump = nameof(Jump);
-    private const string Speed = nameof(Speed);
-    private const string OnGround = nameof(OnGround);
     
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _jumpHeight;
     [SerializeField] private float _groundCheckRadius;
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private LayerMask _groundLayerMask;
     
-    private bool _isTouchingGround;
-    private Rigidbody2D _player;
-    private SpriteRenderer _playerRenderer;
-    private Animator _playerAnimation;
+    private Mover _mover;
+    private View _view;
     
-    private void Start()
-    {
-        _player = GetComponent<Rigidbody2D>();
-        _playerRenderer = GetComponent<SpriteRenderer>();
-        _playerAnimation = GetComponent<Animator>();
-    }
+    private bool _isTouchingGround;
 
-    private void Update()
+    private void Awake()
     {
-        Move();
-        JumpUp();
+        _mover = GetComponent<Mover>();
+        _view = GetComponent<View>();
     }
-
-    private void Move()
+    
+    private void FixedUpdate()
     {
         float direction = Input.GetAxis(Horizontal);
-        float distance = direction * _moveSpeed * Time.deltaTime;
         
-        _playerAnimation.SetFloat(Speed, Mathf.Abs(direction));
-        
-        transform.Translate(distance * Vector2.right);
-        
-        if (direction > 0) FlipHorizontal(false);
-        else if (direction < 0) FlipHorizontal(true);
+        HandleMovement(direction);
+        UpdateAnimation(direction);
+        HandleJump();
+    }
+    
+    private void HandleMovement(float direction)
+    {
+        _mover.Move(direction);
+        _mover.Rotate(direction);
+    }
+    
+    private void UpdateAnimation(float direction)
+    {
+        _view.SetSpeed(Mathf.Abs(direction));
+        _view.SetOnGround(IsGrounded());
     }
 
-    private void JumpUp()
+    private void HandleJump()
     {
-        _playerAnimation.SetBool(OnGround, !_isTouchingGround);
-        
         if (Input.GetAxis(Jump) > 0f && IsGrounded())
         {
-            _player.velocity = new Vector2(_player.velocity.x, _jumpHeight);
+            _mover.JumpUp();
+            _view.SetOnGround(!_isTouchingGround);
         }
     }
 
     private bool IsGrounded()
     {
-       return _isTouchingGround = Physics2D.OverlapCircle(_groundCheck.position, _groundCheckRadius, _groundLayerMask);
-    }
-
-    private void FlipHorizontal(bool value)
-    {
-        _playerRenderer.flipX = value;
+        return _isTouchingGround = Physics2D.OverlapCircle
+            (_groundCheck.position, _groundCheckRadius, _groundLayerMask);
     }
 }

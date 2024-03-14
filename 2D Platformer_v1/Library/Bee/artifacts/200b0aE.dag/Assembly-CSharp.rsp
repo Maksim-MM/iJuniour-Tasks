@@ -356,6 +356,9 @@
 -r:"Library/Bee/artifacts/200b0aE.dag/Unity.Mathematics.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/Unity.Mathematics.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
+-r:"Library/Bee/artifacts/200b0aE.dag/Unity.Recorder.Base.ref.dll"
+-r:"Library/Bee/artifacts/200b0aE.dag/Unity.Recorder.Editor.ref.dll"
+-r:"Library/Bee/artifacts/200b0aE.dag/Unity.Recorder.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/Unity.Rider.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/Unity.TextMeshPro.Editor.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/Unity.TextMeshPro.ref.dll"
@@ -376,8 +379,10 @@
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.4f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Scripts/EnemyMovement.cs"
 "Assets/Scripts/Money.cs"
+"Assets/Scripts/Mover.cs"
 "Assets/Scripts/Player.cs"
 "Assets/Scripts/Spawner.cs"
+"Assets/Scripts/View.cs"
 -langversion:9.0
 
 /deterministic
