@@ -33,7 +33,15 @@ public class Mover : MonoBehaviour
 
     public void Rotate(float velocityX)
     {
-        transform.localRotation = velocityX > 0 ? _turnRight : _turnLeft;
+        switch (velocityX)
+        {
+            case > 0:
+                transform.localRotation = _turnRight;
+                break;
+            case < 0:
+                transform.localRotation = _turnLeft;
+                break;
+        }
     }
 
     public void JumpUp()
