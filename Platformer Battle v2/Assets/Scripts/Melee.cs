@@ -13,7 +13,10 @@ public class Melee : MonoBehaviour
     {
         _colliders = Physics2D.OverlapCircleAll(transform.position, _attackRadius, _targetMask);
 
-        if (_colliders.Length == 0) return;
+       if (_colliders.Length == 0)
+        {
+            return;
+        }
        
         foreach (var enemy in _colliders)
         {
