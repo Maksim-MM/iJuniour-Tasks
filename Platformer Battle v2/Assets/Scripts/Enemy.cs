@@ -19,6 +19,9 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerStay2D (Collider2D collider)
     {
-        if (collider.gameObject.TryGetComponent(out Player player)) _melee.Attack();
+        if (collider.gameObject.TryGetComponent(out Player player))
+        {
+            _melee.Attack();
+        }
     }
 }

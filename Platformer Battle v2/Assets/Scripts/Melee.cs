@@ -4,7 +4,6 @@ public class Melee : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetMask;
     [SerializeField] private float _attackRadius;
-    [SerializeField] private bool _canDrawGizmo;
     [SerializeField] private int _damage;
     [SerializeField] private float _pushForce;
     
@@ -27,10 +26,5 @@ public class Melee : MonoBehaviour
                 rigidbody2D.AddForce( pushDirection * _pushForce , ForceMode2D.Impulse);
             }
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (_canDrawGizmo) Gizmos.DrawWireSphere(transform.position, _attackRadius);
     }
 }

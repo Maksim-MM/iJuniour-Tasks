@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 [RequireComponent ( typeof ( Mover ) )]
 [RequireComponent ( typeof ( View ) )]
+[RequireComponent ( typeof ( Health ) )]
 public class Player : MonoBehaviour
 {
     private const string Horizontal = nameof(Horizontal);
@@ -11,9 +13,10 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private LayerMask _groundLayerMask;
     [SerializeField] private Melee _melee;
-    
+
     private Mover _mover;
     private View _view;
+    private Health _health;
     
     private bool _isTouchingGround;
 
@@ -21,6 +24,7 @@ public class Player : MonoBehaviour
     {
         _mover = GetComponent<Mover>();
         _view = GetComponent<View>();
+        _health = GetComponent<Health>();
     }
     
     private void FixedUpdate()
@@ -31,6 +35,21 @@ public class Player : MonoBehaviour
         UpdateAnimation(direction);
         HandleJump();
         HandleAttack();
+    }
+    
+    private void OnTriggerEnter2D (Collider2D collider)
+    {
+        if (collider.gameObject.TryGetComponent(out AidKit aidKit))
+        {
+            _health.TakeCure(aidKit.GetHealValue());
+            
+            aidKit.gameObject.SetActive(false);
+        }
+
+        if (collider.gameObject.TryGetComponent(out Money money))
+        {
+            money.gameObject.SetActive(false);
+        }
     }
     
     private void HandleMovement(float direction)

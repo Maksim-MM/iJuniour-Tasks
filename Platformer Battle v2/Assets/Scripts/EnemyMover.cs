@@ -11,7 +11,7 @@ public class EnemyMover : MonoBehaviour
 
     private Quaternion _turnLeft = Quaternion.Euler(0f, 180f, 0f);
     private Quaternion _turnRight = Quaternion.identity;
-    private bool isChase = false;
+    private bool _isChase = false;
     private Vector2 _targetPosition;
     
     private void OnEnable()
@@ -32,7 +32,7 @@ public class EnemyMover : MonoBehaviour
 
     public void Move()
     {
-        if (isChase == false)
+        if (_isChase == false)
         {
             PatrolArea();
         }
@@ -50,7 +50,7 @@ public class EnemyMover : MonoBehaviour
 
     private void SetTarget(Vector2 position)
     {
-        isChase = true;
+        _isChase = true;
         _targetPosition = position;
     }
 
@@ -75,6 +75,9 @@ public class EnemyMover : MonoBehaviour
 
         Rotate((targetPosition - (Vector2)transform.position).normalized);
 
-        if (transform.position.x == position.x) isChase = false;
+        if (transform.position.x == position.x)
+        {
+            _isChase = false;
+        }
     }
 }
