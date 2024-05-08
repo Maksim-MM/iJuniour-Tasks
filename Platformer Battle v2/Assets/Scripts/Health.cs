@@ -11,7 +11,9 @@ public class Health : MonoBehaviour
         _value -= damage;
         
         if (IsAlive == false)
+        {
             Die();
+        }
     }
 
     public void TakeCure(int value)
